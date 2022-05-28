@@ -1,11 +1,14 @@
 package seleniumLesson3;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
 
 public class FirstSeleniumTest {
     private final String HOME_PAGE_URL = "http:1a.lv";
@@ -21,6 +24,9 @@ public class FirstSeleniumTest {
     private final By COMPUTER_COMPONENTS = By.xpath(".//a[@href = '/c/datoru-komponentes-tikla-produkti/2pe']");
     private final By PHONES_TABLETS_AND_APPLE_SHOP = By.xpath(".//a[@href = '/c/telefoni-plansetdatori-apple-veikals/2pc']");
     private final By TV_AND_CONSOLES = By.xpath(".//a[@href = '/c/tv-audio-video-spelu-konsoles/2pf']");
+    private final By ACCEPT_COOKIES_BTN = By.id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll");
+
+    private final String CATEGORY_NAME = "Apple AirPods";
 
     @Test
     public void openWebPage() {
@@ -29,10 +35,33 @@ public class FirstSeleniumTest {
         browser.manage().window().maximize();
         browser.get(HOME_PAGE_URL);
 
+        WebDriverWait wait = new WebDriverWait(browser, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(ACCEPT_COOKIES_BTN));
+
+        browser.findElement(ACCEPT_COOKIES_BTN).click();
+
         WebElement searchField = browser.findElement(SEARCH_INPUT_FIELD);
         searchField.sendKeys("Apple");
         searchField.sendKeys(Keys.ENTER);
 
+        List<WebElement> subMenuitems = browser.findElements(PRODUCT_TYPE);
+        boolean flag = false;
+        for (WebElement we : subMenuitems) {
+            if (we.getText().equals(CATEGORY_NAME)) {
+                flag = true;
+                wait.until(ExpectedConditions.elementToBeClickable(we));
+                try {
+                    we.click();
+                } catch (ElementClickInterceptedException e) {
+                    System.out.println("Cant click from the first try");
+                    we.click();
+                }
 
+                break;
+
+            }
+        }
+
+        Assertions.assertTrue(flag, "Category not found");
     }
 }
