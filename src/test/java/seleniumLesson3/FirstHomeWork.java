@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
 
 
 public class FirstHomeWork {
@@ -48,6 +50,10 @@ public class FirstHomeWork {
 
         WebElement flyDataField = browser.findElement(TRAVELING_DATE);
         flyDataField.click();
+
+        Select date =  new Select(browser.findElement(By.id("13")));
+        date.selectByVisibleText("11-05-2018");
+
 
     }
 }
