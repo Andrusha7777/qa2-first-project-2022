@@ -19,6 +19,7 @@ public class FirstHomeWork {
     private final By LUGGAGE_AMMOUNT = By.id("bugs");
     private final By TRAVELING_DATES = By.id("flight");
     private final By TRAVELING_DATE = By.xpath(".//select[@option = '13']");
+    private final By DROP_DOWN = By.id("flight");
 
     @Test
     public void openWebPage() {
@@ -48,11 +49,12 @@ public class FirstHomeWork {
         WebElement flyDatesField = browser.findElement(TRAVELING_DATES);
         flyDatesField.click();
 
-        WebElement flyDataField = browser.findElement(TRAVELING_DATE);
-        flyDataField.click();
-
-        Select date =  new Select(browser.findElement(By.id("13")));
+        Select date = new Select(browser.findElement(By.id("13")));
         date.selectByVisibleText("11-05-2018");
+        
+
+
+
 
 
     }

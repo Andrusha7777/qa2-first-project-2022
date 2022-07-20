@@ -63,5 +63,7 @@ public class FirstSeleniumTest {
         }
 
         Assertions.assertTrue(flag, "Category not found");
+
+
     }
 }
